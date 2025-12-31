@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Year ✨</title>
+
+<style>
+body{
+  margin:0;
+  font-family:sans-serif;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#fbc2eb,#a6c1ee);
+}
+
+.card{
+  background:#ffffffee;
+  padding:30px;
+  width:90%;
+  max-width:380px;
+  border-radius:20px;
+  text-align:center;
+  animation:fade 0.8s;
+}
+
+.hidden{display:none;}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:15px;
+  border-radius:12px;
+  border:1px solid #ccc;
+}
+
+button{
+  width:100%;
+  padding:13px;
+  margin-top:20px;
+  border:none;
+  border-radius:14px;
+  background:#6a5cff;
+  color:white;
+  font-size:16px;
+}
+
+img{
+  width:100%;
+  height:100vh;
+  object-fit:cover;
+  border-radius:0;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1}
+}
+
+p{opacity:0.85; line-height:1.6;}
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div class="card" id="page1">
+  <h2>Hello 🙂</h2>
+  <p>Just two small details</p>
+
+  <input id="name" placeholder="Your name">
+  <input id="dob" type="date">
+
+  <button onclick="goMessage()">Continue ✨</button>
+</div>
+
+<!-- PAGE 2 -->
+<div class="card hidden" id="page2">
+  <h2 id="title"></h2>
+  <p id="message"></p>
+  <button onclick="goReflection()">Continue 🌱</button>
+</div>
+
+<!-- PAGE 3 -->
+<div class="card hidden" id="page3">
+  <h2>One small thought 🌙</h2>
+  <p id="reflection"></p>
+  <button onclick="goFinal()">Continue ✨</button>
+</div>
+
+<!-- PAGE 4 -->
+<div class="hidden" id="page4">
+  <img id="finalImage" src="" alt="New Year">
+</div>
+
+<script>
+let userName="", userDob="";
+
+function normalizeName(name){
+  return name.toLowerCase().replace(/[^a-z]/g,"");
+}
+
+function isNanditha(name){
+  return normalizeName(name).startsWith("nanditha");
+}
+
+function goMessage(){
+  userName = document.getElementById("name").value.trim();
+  userDob = document.getElementById("dob").value;
+
+  if(!userName || !userDob){
+    alert("Please fill both 🙂");
+    return;
+  }
+
+  const parts = userDob.split("-");
+  const year = Number(parts[0].slice(-2));
+  const month = Number(parts[1]);
+  const day = Number(parts[2]);
+
+  const seed =
+    (userName.length * 3 + day + month + year) % 18;
+
+  const messages = [
+    "This year invites a calmer pace and clearer moments.",
+    "Small changes may quietly bring confidence.",
+    "A steady rhythm will suit you well.",
+    "This year feels less rushed and more meaningful.",
+    "Comfort may come from simple progress.",
+    "Balance will matter more than pressure.",
+    "Clarity may arrive when least expected.",
+    "Patience will quietly reward you.",
+    "Things may settle naturally in time.",
+    "Growth doesn’t always make noise.",
+    "Consistency will bring quiet strength.",
+    "Trust small beginnings.",
+    "Calm effort will go far.",
+    "Let simplicity guide you.",
+    "Focus will feel easier this year.",
+    "Gentle confidence will build.",
+    "Progress may feel natural.",
+    "Stability brings peace."
+  ];
+
+  document.getElementById("title").innerText =
+    "Happy New Year, " + userName + " ✨";
+
+  document.getElementById("message").innerText =
+    messages[seed];
+
+  page1.classList.add("hidden");
+  page2.classList.remove("hidden");
+}
+
+function goReflection(){
+  const parts = userDob.split("-");
+  const day = Number(parts[2]);
+
+  const seed =
+    (userName.length * 2 + day) % 14;
+
+  const reflections = [
+    "Quiet effort will matter most.",
+    "You don’t need to rush.",
+    "Observation can be a strength.",
+    "Being steady is enough.",
+    "Small choices shape outcomes.",
+    "Calm focus brings clarity.",
+    "Trust your pace.",
+    "Patience sharpens understanding.",
+    "Growth can be subtle.",
+    "Let things unfold naturally.",
+    "Consistency builds confidence.",
+    "Silence can be powerful.",
+    "Peace comes from balance.",
+    "Clarity follows patience."
+  ];
+
+  document.getElementById("reflection").innerText =
+    reflections[seed];
+
+  page2.classList.add("hidden");
+  page3.classList.remove("hidden");
+}
+
+function goFinal(){
+  const img = document.getElementById("finalImage");
+
+  img.src = isNanditha(userName) ? "beach.png" : "sky.png";
+
+  page3.classList.add("hidden");
+  page4.classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
